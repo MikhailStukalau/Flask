@@ -1,5 +1,9 @@
-from app import app
-from flask import render_template
+from app import app, db
+from flask import render_template, request, redirect
+import logging
+from models import Article
+
+logger = logging.getLogger('app')
 
 
 @app.route('/')
@@ -13,9 +17,24 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/create')
+@app.route('/create', methods=['POST', 'GET'])
 def create():
-    return render_template('create.html')
+    if request.method == 'POST':
+        title = request.form['title']
+        intro = request.form['intro']
+        text = request.form['text']
+
+        art = Article(title=title, intro=intro, text=text)
+
+        try:
+            db.session.add(art)
+            db.session.commit()
+            return redirect('/home')
+        except Exception as ex:
+            logger.warning(ex)
+            return 'Error'
+    else:
+        return render_template('create.html')
 
 
 @app.route('/contacts')

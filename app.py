@@ -15,3 +15,4 @@ app.logger.info("App started")
 db = SQLAlchemy(app)
 
 import views
+
