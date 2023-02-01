@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+More info
+{% endblock %}
+
+{% block content %}
+{{ detail.title }} <br>
+{{ detail.intro }} <br>
+{{ detail.text }} <br>
+Create date: {{ detail.date }}  Update date: {{ detail.updated_on }}
+{% endblock %}
